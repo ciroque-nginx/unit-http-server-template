@@ -69,7 +69,7 @@ go test ./...
 To build the project, execute the following command:
 
 ```shell    
-go build -o cmd/main/base-http-server cmd/main/main.go
+go build -o _build/http-server cmd/main/main.go
 ```
 
 ### Compile to WebAssembly
@@ -77,7 +77,7 @@ go build -o cmd/main/base-http-server cmd/main/main.go
 To compile the project to WebAssembly, execute the following command:
 
 ```shell
-GOOS=js GOARCH=wasm go build -o cmd/main/main.wasm cmd/main/main.go
+GOOS=js GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
 ```
 
 ### Run the Project in NGINX Unit
