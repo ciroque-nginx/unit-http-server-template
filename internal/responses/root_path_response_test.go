@@ -4,3 +4,13 @@
  */
 
 package responses
+
+import "testing"
+
+func TestRootPathResponse(t *testing.T) {
+	response := NewRootPathResponse("Hello, World!")
+
+	if response.Body != "Hello, World!" {
+		t.Errorf("Expected response.Body to be 'Hello, World!', but was '%s'", response.Body)
+	}
+}

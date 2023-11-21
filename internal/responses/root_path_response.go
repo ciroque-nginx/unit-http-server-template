@@ -8,3 +8,7 @@ package responses
 type RootPathResponse struct {
 	Body string `json:"text"`
 }
+
+func NewRootPathResponse(body string) RootPathResponse {
+	return RootPathResponse{Body: body}
+}

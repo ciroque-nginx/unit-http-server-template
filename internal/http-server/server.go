@@ -23,7 +23,23 @@ type Server struct {
 	Metrics      *metrics.Metrics
 }
 
-func (server *Server) Run() {
+func NewServer(
+	settings *config.Settings,
+	abortChannel chan<- string,
+	logger *logrus.Entry,
+	metricsClient *metrics.Metrics) (*Server, error) {
+
+	server := Server{
+		AbortChannel: abortChannel,
+		Logger:       logger,
+		Settings:     settings,
+		Metrics:      metricsClient,
+	}
+
+	return &server, nil
+}
+
+func (server *Server) Run(stopCh <-chan struct{}) {
 	server.Logger.Debugf("Server::Run: %#v", server)
 	rootPathHandler := promhttp.InstrumentHandlerCounter(
 		server.Metrics.RootPathRequestCount,
@@ -31,23 +47,27 @@ func (server *Server) Run() {
 			server.Metrics.RootPathRequestDurations,
 			http.HandlerFunc(server.ServeRootPath)))
 
-	http.Handle("/metrics", promhttp.Handler())
-	http.HandleFunc("/", rootPathHandler)
+	mux := http.NewServeMux()
+	mux.Handle("/metrics", promhttp.Handler())
+	mux.HandleFunc("/", rootPathHandler)
 
-	address := fmt.Sprintf("%s:%d", server.Settings.Host, server.Settings.Port)
+	address := fmt.Sprintf("%s:%s", server.Settings.Host, server.Settings.Port)
 
 	server.Logger.Info("Listening on ", address)
 
-	err := http.ListenAndServe(address, nil)
+	err := http.ListenAndServe(address, mux)
 	if err != nil {
-		server.Logger.Errorf("Error starting server: %v", err)
 		server.AbortChannel <- err.Error()
 	}
+
+	<-stopCh
+
+	server.Logger.Info("Server stopped")
 }
 
 func (server *Server) ServeRootPath(writer http.ResponseWriter, request *http.Request) {
 	server.Logger.Debugf("Server::ServeRootPath: %#v", request)
-	response := responses.RootPathResponse{Body: "200 OK"}
+	response := responses.NewRootPathResponse("200 OK")
 
 	bytes, err := json.Marshal(&response)
 	if err != nil {

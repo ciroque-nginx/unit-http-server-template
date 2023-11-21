@@ -6,15 +6,14 @@
 package config
 
 import (
-	"fmt"
 	"github.com/sirupsen/logrus"
 	"os"
-	"strconv"
 )
 
 const (
 	DefaultHost                 = "0.0.0.0"
 	DefaultPort                 = "8888"
+	DefaultLogLevel             = logrus.InfoLevel
 	HostEnvironmentVariable     = "BHS_HTTP_HOST"
 	LogLevelEnvironmentVariable = "BHS_LOG_LEVEL"
 	PortEnvironmentVariable     = "BHS_HTTP_PORT"
@@ -22,7 +21,7 @@ const (
 
 type Settings struct {
 	Host     string
-	Port     int
+	Port     string
 	LogLevel logrus.Level
 }
 
@@ -32,11 +31,6 @@ func NewSettings() (*Settings, error) {
 		port = DefaultPort
 	}
 
-	portNumber, err := strconv.Atoi(port)
-	if err != nil {
-		return nil, fmt.Errorf("unable to parse SRES_PORT: %v", err)
-	}
-
 	host := os.Getenv(HostEnvironmentVariable)
 	if host == "" {
 		host = DefaultHost
@@ -44,7 +38,7 @@ func NewSettings() (*Settings, error) {
 
 	logLevel := getLogLevel()
 
-	config := &Settings{host, portNumber, logLevel}
+	config := &Settings{host, port, logLevel}
 
 	return config, nil
 }
@@ -62,7 +56,7 @@ func getLogLevel() logrus.Level {
 	case "error":
 		return logrus.ErrorLevel
 
-	case "warn":
+	case "warning":
 		return logrus.WarnLevel
 
 	case "info":
@@ -75,6 +69,6 @@ func getLogLevel() logrus.Level {
 		return logrus.TraceLevel
 
 	default:
-		return logrus.InfoLevel
+		return DefaultLogLevel
 	}
 }
