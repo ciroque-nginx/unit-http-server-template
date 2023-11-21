@@ -33,14 +33,14 @@ func main() {
 	abortChannel := make(chan string)
 	defer close(abortChannel)
 
-	httpServer := httpserver.Server{
-		AbortChannel: abortChannel,
-		Logger:       logrus.NewEntry(logger),
-		Settings:     settings,
-		Metrics:      &metricClient,
+	httpServer, err := httpserver.NewServer(settings, abortChannel, logrus.NewEntry(logger), &metricClient)
+	if err != nil {
+		logger.Fatalf("Error creating http server: %v", err)
 	}
 
-	go httpServer.Run()
+	stopCh := make(chan struct{})
+
+	go httpServer.Run(stopCh)
 
 	sigTerm := make(chan os.Signal, 1)
 
@@ -51,11 +51,12 @@ func main() {
 	select {
 	case <-sigTerm:
 		{
+			close(stopCh)
 			logger.Info("Exiting per SIGTERM")
 		}
 	case err := <-abortChannel:
 		{
-			logger.Error(err)
+			logger.Errorf("Error starting server: %v", err)
 		}
 	}
 }
