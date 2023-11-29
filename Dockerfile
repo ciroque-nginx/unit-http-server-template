@@ -1,6 +1,7 @@
 ARG BUILDER_IMAGE="unit:1.31.0-go1.21"
 ARG RUNNER_IMAGE="unit:1.31.0-go1.21"
 
+## Phase I: Create the build image
 FROM ${BUILDER_IMAGE} AS BUILDER
 
 ARG BUILD_DIR="/go/src/unit-http-server-template"
@@ -19,6 +20,7 @@ RUN go install ${BUILD_DIR}/cmd/main/main.go
 # build project
 RUN go build -o ${BUILD_DIR}/http-server ${BUILD_DIR}/cmd/main/main.go
 
+## Phase II: Create the deployable image
 FROM ${RUNNER_IMAGE}
 
 ARG BUILD_DIR="/go/src/unit-http-server-template"

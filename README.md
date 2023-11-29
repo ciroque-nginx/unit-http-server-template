@@ -82,6 +82,43 @@ GOOS=js GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
 
 ### Run the Project in NGINX Unit
 
+The easiest way to run the project in NGINX Unit is to use Docker. The `Dockerfile` can be used to build an
+image that can be used to run the project in NGINX Unit.
+
+To build the image, execute the following command:
+
+```shell    
+docker build -t bhs:dev .
+```
+
+To run the image, execute the following command:
+
+```shell
+docker run -dit -p 8888:8888 --rm --name bhs_unit_dev bhs:dev
+```
+
+Throw some requests at the server:
+
+```shell
+curl http://localhost:8888
+curl http://localhost:8888/metrics
+```
+
+To stop the container, execute the following command:
+
+```shell
+docker stop bhs_unit_dev
+```
+
+To remove the image, execute the following command:
+
+```shell
+docker rmi bhs:dev
+```
+
+
+
+
 ## Contributing
 
 Please see the [contributing guide](https://github.com/ciroque/go-base-http-server/blob/main/CONTRIBUTING.md) for guidelines on how to best contribute to this project.
