@@ -1,0 +1,20 @@
+{
+  "listeners": {
+    "*:8989": {
+      "pass": "applications/http-server"
+    }
+  },
+
+  "applications": {
+    "http-server": {
+      "type": "external",
+      "working_directory": "/var/lib/unit",
+      "executable": "/tmp/http-server",
+      "environment": {
+        "BHS_LOG_LEVEL": "debug",
+        "BHS_HTTP_PORT": "8888"
+      },
+      "arguments": []
+    }
+  }
+}
