@@ -1,1 +1,2 @@
 golang 1.21.4
+wasmtime v9.0.4
