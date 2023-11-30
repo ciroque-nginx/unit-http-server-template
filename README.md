@@ -1,6 +1,33 @@
 [![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 
-# unit-http-server-template
+# NGINX Unit HTTP Server Template Repository
+
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](
+
+## What is included on this template?
+
+This template includes all the scaffolding you need to get started on a Go HTTP Server running in NGINX Unit.
+
+## How do I use this template?
+
+**DO NOT FORK** -- this template is meant to be used from the **[`Use this template`](https://github.com/nginxinc/template-repository/generate)** feature.
+
+1. Click on **[`Use this template`](https://github.com/nginxinc/template-repository/generate)**
+2. Give a name to your project
+3. Wait until the first run of CI finishes (GitHub Actions will process the template and commit to your new repo)
+4. Clone your new project and tweak any of the placeholders if necessary. Pay special attention to the README!
+5. Happy coding!
+
+**NOTE**: **WAIT** until the first CI run on GitHub Actions finishes before cloning your new project.
+
+---
+
+<!--  DELETE THE LINES ABOVE THIS AND WRITE YOUR PROJECT README BELOW -- PLACEHOLDER SECTIONS HAVE BEEN INCLUDED FOR YOUR CONVENIENCE -->
+
+[![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
+
+
+# {{REPOSITORY_NAME}}
 
 This project is intended to serve three purposes:
 - Provide a template for creating HTTP Servers in Go
@@ -28,6 +55,10 @@ asdf install
 
 Compilation to WebAssembly uses the [WASI support](https://go.dev/blog/wasi) in Go 1.21. 
 
+**NOTE**: The WASM support in Go is still experimental and may change in future versions of Go. Additionally, running
+WASM in NGINX Unit is currently only supported for C and Rust. As support for Go WASM in NGINX Unit improves, this project 
+will be updated to reflect those changes.
+
 ### NGINX Unit Configuration
 
 ### Prometheus Metrics
@@ -36,7 +67,7 @@ The project includes a [Prometheus](https://prometheus.io/) metrics endpoint tha
 
 This can be used as an example to add additional metrics to your project.
 
-The [Prometheus Go client library](github.com/prometheus/client_golang) is used to implement the metrics endpoint.
+The [Prometheus Go client library](https://github.com/prometheus/client_golang) is used to implement the metrics endpoint.
 
 When running, the metrics can be accessed at the following URL:
 
@@ -46,15 +77,10 @@ http://<hostname>:<port>/metrics
 
 ## Getting Started
 
-- Use the template repository to create a new repository
 - Run the tests
 - Build the project
 - Compile to WebAssembly
 - Run the project in NGINX Unit
-
-### Use the Template Repository
-
-To use this template repository, [generate a new repository with the template](https://github.com/ciroque/go-base-http-server/generate).
 
 ### Run the Tests
 
@@ -82,10 +108,6 @@ GOOS=js GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
 
 ```shell
 GOOS=wasip1 GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
-```
-
-```shell
-GOOS=wasip2 GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
 ```
 
 ### Run the Project in NGINX Unit
@@ -129,10 +151,10 @@ docker rmi bhs:dev
 
 ## Contributing
 
-Please see the [contributing guide](https://github.com/ciroque/go-base-http-server/blob/main/CONTRIBUTING.md) for guidelines on how to best contribute to this project.
+    Please see the [contributing guide](https://github.com/{{REPOSITORY_OWNER}}/{{REPOSITORY_URL}}/blob/main/CONTRIBUTING.md) for guidelines on how to best contribute to this project.
 
 ## License
 
-[Apache License, Version 2.0](https://github.com/ciroque/go-base-http-server/blob/main/LICENSE)
+[Apache License, Version 2.0](https://github.com/{{REPOSITORY_OWNER}}/{{REPOSITORY_URL}}/blob/main/LICENSE)
 
-&copy; Steve Wagner [ciroque](https://github.com/ciroque) 2023
+&copy; {{REPOSITORY_OWNER}} 2023
