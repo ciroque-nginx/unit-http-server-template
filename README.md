@@ -1,6 +1,6 @@
 [![Project Status: Concept – Minimal or no implementation has been done yet, or the repository is only intended to be a limited example, demo, or proof-of-concept.](https://www.repostatus.org/badges/latest/concept.svg)](https://www.repostatus.org/#concept)
 
-# go-base-http-server
+# unit-http-server-template
 
 This project is intended to serve three purposes:
 - Provide a template for creating HTTP Servers in Go
@@ -78,6 +78,14 @@ To compile the project to WebAssembly, execute the following command:
 
 ```shell
 GOOS=js GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
+```
+
+```shell
+GOOS=wasip1 GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
+```
+
+```shell
+GOOS=wasip2 GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
 ```
 
 ### Run the Project in NGINX Unit
