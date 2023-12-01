@@ -107,7 +107,7 @@ GOOS=wasip1 GOARCH=wasm go build -o _build/http-server.wasm cmd/main/main.go
 ```
 
 [!WARNING]  
-Turns out runing this server using wasm is not possible; the current WASI implementation does not support network sockets:
+Turns out running this server using wasm is not possible; the current WASI implementation does not support network sockets:
 
 "A notable missing feature in the wasip1 API is a full implementation of network sockets. wasip1 only defines functions that operate on already opened sockets, making it impossible to support some of the most popular features of the Go standard library, such as HTTP servers."
 
